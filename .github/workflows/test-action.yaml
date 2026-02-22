@@ -1,0 +1,41 @@
+name: Test Input/Context Flow Demonstrator
+
+on:
+  workflow_dispatch:
+    inputs:
+      user_text:
+        description: "Text to pass into the action"
+        required: true
+        default: "hello-from-dispatch"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call the action
+        id: demo
+        uses: YOUR_ORG_OR_NAME/safe-gh-action-test@v1
+        with:
+          user_text: ${{ inputs.user_text }}
+
+      - name: Verify env vars written by action
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "UNSAFE_ARG_ENV=$UNSAFE_ARG_ENV"
+          echo "UNSAFE_CTX_ENV=$UNSAFE_CTX_ENV"
+
+          # Basic assertions
+          test "$UNSAFE_ARG_ENV" = "${{ inputs.user_text }}"
+          test -n "$UNSAFE_CTX_ENV"
+
+      - name: Verify outputs produced by action
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "arg_output=${{ steps.demo.outputs.arg_output }}"
+          echo "ctx_output=${{ steps.demo.outputs.ctx_output }}"
+
+          # Basic assertions
+          test "${{ steps.demo.outputs.arg_output }}" = "${{ inputs.user_text }}"
+          test -n "${{ steps.demo.outputs.ctx_output }}"
