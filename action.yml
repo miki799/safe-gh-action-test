@@ -1,6 +1,6 @@
 name: "Input/Context Flow Demonstrator"
 description: "Demonstrates common dataflow patterns from inputs and workflow context into commands, env, and outputs."
-author: "safe-gh-action-test"
+author: "miki799"
 branding:
   icon: "alert-triangle"
   color: "red"
