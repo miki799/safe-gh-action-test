@@ -24,6 +24,6 @@ jobs:
   demo:
     runs-on: ubuntu-latest
     steps:
-      - uses: YOUR_ORG/YOUR_ACTION_REPO@v1
+      - uses: miki799/safe-gh-action-test@v2
         with:
           user_text: ${{ inputs.user_text }}
